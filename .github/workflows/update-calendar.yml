@@ -1,0 +1,35 @@
+name: Update Finance Calendar
+
+# 每日自动抓取 BLS 经济数据发布日程, 更新 events-auto.json (供 Pages 前端同源加载)
+on:
+  schedule:
+    - cron: '10 0 * * *' # UTC 00:10 = 北京时间 08:10
+  workflow_dispatch: # 支持手动触发
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-calendar
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run calendar update script
+        run: node .github/scripts/update-calendar.mjs
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet events-auto.json; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add events-auto.json
+            git commit -m "chore(auto): update finance calendar events [skip ci]"
+            git push
+          fi

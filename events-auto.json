@@ -1,0 +1,44 @@
+{
+ "updated": "2026-09-01T02:26:35.566Z",
+ "sources": [
+  "Fed"
+ ],
+ "events": [
+  {
+   "id": "fomc-2026-09",
+   "title": "美联储FOMC议息会议 (Sep)",
+   "date": "2026-09-15",
+   "endDate": "2026-09-16",
+   "region": "us",
+   "kind": "fed",
+   "location": "华盛顿",
+   "impact": 3,
+   "note": "附带经济预期(SEP)与点阵图, 决议美东次日14:00(北京时间次日凌晨2:00)公布",
+   "auto": true
+  },
+  {
+   "id": "fomc-2026-10",
+   "title": "美联储FOMC议息会议 (Oct)",
+   "date": "2026-10-27",
+   "endDate": "2026-10-28",
+   "region": "us",
+   "kind": "fed",
+   "location": "华盛顿",
+   "impact": 3,
+   "note": "决议美东次日14:00(北京时间次日凌晨2:00)公布, 随后主席新闻发布会",
+   "auto": true
+  },
+  {
+   "id": "fomc-2026-12",
+   "title": "美联储FOMC议息会议 (Dec)",
+   "date": "2026-12-08",
+   "endDate": "2026-12-09",
+   "region": "us",
+   "kind": "fed",
+   "location": "华盛顿",
+   "impact": 3,
+   "note": "附带经济预期(SEP)与点阵图, 决议美东次日14:00(北京时间次日凌晨2:00)公布",
+   "auto": true
+  }
+ ]
+}
