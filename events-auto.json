@@ -1,7 +1,8 @@
 {
- "updated": "2026-09-01T02:26:35.566Z",
+ "updated": "2026-09-01T02:43:29.650Z",
  "sources": [
-  "Fed"
+  "Fed",
+  "BEA"
  ],
  "events": [
   {
@@ -17,6 +18,50 @@
    "auto": true
   },
   {
+   "id": "bea-美国商品与服务贸易帐-2026-09-24",
+   "title": "美国商品与服务贸易帐",
+   "date": "2026-09-24",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 2,
+   "note": "月度贸易逆差数据",
+   "auto": true
+  },
+  {
+   "id": "bea-美国GDP修正值-2026-09-30",
+   "title": "美国GDP修正值",
+   "date": "2026-09-30",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 2,
+   "note": "BEA季度GDP修正估算",
+   "auto": true
+  },
+  {
+   "id": "bea-美国PCE物价指数与个人收入-2026-10-06",
+   "title": "美国PCE物价指数与个人收入",
+   "date": "2026-10-06",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 3,
+   "note": "含核心PCE —— 美联储首选通胀指标, 直接影响降息预期",
+   "auto": true
+  },
+  {
+   "id": "bea-美国商品与服务贸易帐-2026-10-06",
+   "title": "美国商品与服务贸易帐",
+   "date": "2026-10-06",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 10:00 AM)",
+   "impact": 2,
+   "note": "月度贸易逆差数据",
+   "auto": true
+  },
+  {
    "id": "fomc-2026-10",
    "title": "美联储FOMC议息会议 (Oct)",
    "date": "2026-10-27",
@@ -29,6 +74,50 @@
    "auto": true
   },
   {
+   "id": "bea-美国GDP初值 (环比年化)-2026-10-29",
+   "title": "美国GDP初值 (环比年化)",
+   "date": "2026-10-29",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 3,
+   "note": "BEA季度GDP初步估算, 市场影响最大的增长数据",
+   "auto": true
+  },
+  {
+   "id": "bea-美国PCE物价指数与个人收入-2026-11-04",
+   "title": "美国PCE物价指数与个人收入",
+   "date": "2026-11-04",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 3,
+   "note": "含核心PCE —— 美联储首选通胀指标, 直接影响降息预期",
+   "auto": true
+  },
+  {
+   "id": "bea-美国商品与服务贸易帐-2026-11-20",
+   "title": "美国商品与服务贸易帐",
+   "date": "2026-11-20",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 2,
+   "note": "月度贸易逆差数据",
+   "auto": true
+  },
+  {
+   "id": "bea-美国PCE物价指数与个人收入-2026-12-02",
+   "title": "美国PCE物价指数与个人收入",
+   "date": "2026-12-02",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 3,
+   "note": "含核心PCE —— 美联储首选通胀指标, 直接影响降息预期",
+   "auto": true
+  },
+  {
    "id": "fomc-2026-12",
    "title": "美联储FOMC议息会议 (Dec)",
    "date": "2026-12-08",
@@ -38,6 +127,28 @@
    "location": "华盛顿",
    "impact": 3,
    "note": "附带经济预期(SEP)与点阵图, 决议美东次日14:00(北京时间次日凌晨2:00)公布",
+   "auto": true
+  },
+  {
+   "id": "bea-美国商品与服务贸易帐-2026-12-10",
+   "title": "美国商品与服务贸易帐",
+   "date": "2026-12-10",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 2,
+   "note": "月度贸易逆差数据",
+   "auto": true
+  },
+  {
+   "id": "bea-美国GDP修正值-2026-12-23",
+   "title": "美国GDP修正值",
+   "date": "2026-12-23",
+   "region": "us",
+   "kind": "data",
+   "location": "华盛顿 (美东 8:30 AM)",
+   "impact": 2,
+   "note": "BEA季度GDP修正估算",
    "auto": true
   }
  ]

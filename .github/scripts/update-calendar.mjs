@@ -47,6 +47,65 @@ async function fetchBlsSchedule(year) {
   }
 }
 
+/** BEA 关注的发布项 (美国经济分析局) */
+const BEA_ITEMS = [
+  { re: String.raw`GDP\s*\(Advance\s+Estimate\)`, title: '美国GDP初值 (环比年化)', impact: 3, note: 'BEA季度GDP初步估算, 市场影响最大的增长数据' },
+  { re: String.raw`GDP\s*\(Second[^)]*\)|GDP\s*\(Third[^)]*\)`, title: '美国GDP修正值', impact: 2, note: 'BEA季度GDP修正估算' },
+  { re: String.raw`Personal\s+Income\s+and\s+Outlays`, title: '美国PCE物价指数与个人收入', impact: 3, note: '含核心PCE —— 美联储首选通胀指标, 直接影响降息预期' },
+  { re: String.raw`International\s+Trade\s+in\s+Goods\s+and\s+Services`, title: '美国商品与服务贸易帐', impact: 2, note: '月度贸易逆差数据' },
+]
+
+/** BEA 发布日程解析: 页面格式为 "发布名称+期间 Month D 8:30 AM News" (年份需推断) */
+async function fetchBeaSchedule() {
+  const url = 'https://www.bea.gov/news/schedule'
+  let html
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'text/html' }, signal: AbortSignal.timeout(25000) })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    html = await res.text()
+  } catch (e) {
+    console.log(`[info] BEA 直连失败(${e.message}), 尝试 jina 代理`)
+    const res2 = await fetch(`https://r.jina.ai/${url}`, {
+      headers: { 'User-Agent': UA, Accept: 'text/plain' },
+      signal: AbortSignal.timeout(35000),
+    })
+    if (!res2.ok) throw new Error(`jina HTTP ${res2.status}`)
+    html = await res2.text()
+  }
+
+  const text = html.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ')
+  const events = []
+  const now = new Date()
+
+  for (const item of BEA_ITEMS) {
+    // 标题(含期间字样) ... Month D h:mm AM
+    const re = new RegExp(`${item.re}[\\s\\S]{0,200}?\\b(${MONTHS.join('|')})\\s+(\\d{1,2})\\s+(\\d{1,2}:\\d{2})\\s*([AP]M)`, 'g')
+    let m
+    while ((m = re.exec(text)) !== null) {
+      const [, mon, day, time, ampm] = m
+      // 年份推断: 从当前时间起最近的未来该日期 (已过则次年)
+      const mm = MONTH_IDX[mon]
+      let year = now.getUTCFullYear()
+      const cand = new Date(Date.UTC(year, mm, Number(day)))
+      if (cand.getTime() + 2 * 86400_000 < now.getTime()) year += 1
+      const mmStr = String(mm + 1).padStart(2, '0')
+      const ddStr = String(Number(day)).padStart(2, '0')
+      events.push({
+        id: `bea-${item.title}-${year}-${mmStr}-${ddStr}`,
+        title: item.title,
+        date: `${year}-${mmStr}-${ddStr}`,
+        region: 'us',
+        kind: 'data',
+        location: `华盛顿 (美东 ${time} ${ampm})`,
+        impact: item.impact,
+        note: item.note,
+        auto: true,
+      })
+    }
+  }
+  return events
+}
+
 /** FOMC 官网解析: 自动提取当年+次年议息会议日期 (含 SEP 点阵图标记) */
 async function fetchFomcCalendar() {
   const url = 'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm'
@@ -163,6 +222,16 @@ async function main() {
     console.log(`[ok] FOMC: ${fomc.length} 次会议`)
   } catch (e) {
     console.log(`[warn] FOMC 抓取失败: ${e.message}`)
+  }
+
+  // ---- 源3: BEA (GDP/PCE/贸易帐) 发布日程 ----
+  try {
+    const bea = await fetchBeaSchedule()
+    events.push(...bea)
+    if (bea.length && !sources.includes('BEA')) sources.push('BEA')
+    console.log(`[ok] BEA: ${bea.length} 条发布日程`)
+  } catch (e) {
+    console.log(`[warn] BEA 抓取失败: ${e.message}`)
   }
 
   if (events.length === 0) {
