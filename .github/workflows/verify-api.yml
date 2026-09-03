@@ -1,0 +1,33 @@
+name: Verify US Sector API
+
+# 一次性验证: 从海外 runner 请求东财 ulist 接口, 确认美股概念板块数据可达
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch ulist API and check concept sectors
+        run: |
+          node -e '
+          const codes = ["SPY","SMH","MU","WDC","STX","COHR","LITE","FN","MP","XME","XLK","IGV","XLF","XLE","XLV","XLI","XLY","XLC","XLU","XBI"];
+          const secids = codes.flatMap(c => ["105."+c, "106."+c, "107."+c]).join(",");
+          const url = "https://push2.eastmoney.com/api/qt/ulist.np/get?ut=fa5fd1943c7b386f172d6893dbfba10b&fltt=2&secids="+secids+"&fields=f2,f3,f6,f12,f14";
+          fetch(url, { headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0", "Referer": "https://quote.eastmoney.com/" } })
+            .then(r => { console.log("HTTP", r.status); return r.text() })
+            .then(t => {
+              const m = t.match(/test123?\((.*)\);?$/s) || [null, t];
+              const json = JSON.parse(m[1] || t);
+              const diff = json?.data?.diff;
+              const arr = Array.isArray(diff) ? diff : Object.values(diff || {});
+              console.log("返回条目:", arr.length);
+              const byCode = {};
+              for (const d of arr) { if (d.f3 !== "-" && d.f3 != null && !byCode[d.f12]) byCode[d.f12] = d; }
+              const want = ["SPY","SMH","MU","MP","XME","XLK","COHR"];
+              for (const c of want) console.log(c, byCode[c] ? "chg="+byCode[c].f3+"% name="+byCode[c].f14 : "MISSING");
+              const ok = want.every(c => byCode[c]);
+              console.log(ok ? "SECTOR-API-OK" : "SECTOR-API-INCOMPLETE");
+            })
+            .catch(e => { console.log("FETCH-ERR", e.message); process.exit(1) })
+          '
