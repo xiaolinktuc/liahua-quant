@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-27T05:12:38.720Z",
+ "updated": "2026-09-28T05:16:13.261Z",
  "sources": [
   "Fed",
   "BEA"
@@ -133,6 +133,18 @@
    "title": "美联储FOMC议息会议 (Jan)",
    "date": "2027-01-25",
    "endDate": "2027-01-26",
+   "region": "us",
+   "kind": "fed",
+   "location": "华盛顿",
+   "impact": 3,
+   "note": "决议美东次日14:00(北京时间次日凌晨2:00)公布, 随后主席新闻发布会",
+   "auto": true
+  },
+  {
+   "id": "fomc-2027-01",
+   "title": "美联储FOMC议息会议 (Jan)",
+   "date": "2027-01-26",
+   "endDate": "2027-01-27",
    "region": "us",
    "kind": "fed",
    "location": "华盛顿",
