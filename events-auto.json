@@ -1,32 +1,10 @@
 {
- "updated": "2026-09-28T05:16:13.261Z",
+ "updated": "2026-10-01T05:44:21.090Z",
  "sources": [
   "Fed",
   "BEA"
  ],
  "events": [
-  {
-   "id": "bea-美国GDP修正值-2026-09-30",
-   "title": "美国GDP修正值",
-   "date": "2026-09-30",
-   "region": "us",
-   "kind": "data",
-   "location": "华盛顿 (美东 8:30 AM)",
-   "impact": 2,
-   "note": "BEA季度GDP修正估算",
-   "auto": true
-  },
-  {
-   "id": "bea-美国PCE物价指数与个人收入-2026-10-06",
-   "title": "美国PCE物价指数与个人收入",
-   "date": "2026-10-06",
-   "region": "us",
-   "kind": "data",
-   "location": "华盛顿 (美东 8:30 AM)",
-   "impact": 3,
-   "note": "含核心PCE —— 美联储首选通胀指标, 直接影响降息预期",
-   "auto": true
-  },
   {
    "id": "bea-美国商品与服务贸易帐-2026-10-06",
    "title": "美国商品与服务贸易帐",
